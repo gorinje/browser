@@ -2,9 +2,11 @@
 
 Ce projet a été généré avec [Angular CLI](https://github.com/angular/angular-cli) version 16.1.0.
 
+Lancez la commande `npm install` pour installer les dépendances nécessaires du projet.
+
 ## Serveur de développement Angular
 
-Exécutez `npm run start` pour un serveur de développement. Accédez à « http://localhost:4200/ ». L'application se rechargera automatiquement si vous modifiez l'un des fichiers source.
+Exécutez `npm run start` pour lancer un serveur de développement. Accédez à « http://localhost:4200/ ». L'application se rechargera automatiquement si vous modifiez l'un des fichiers source.
 
 ## Construire l'application Angular
 
@@ -16,7 +18,7 @@ Exécutez `npm run start` puis en parrallèle `npm run start:electron` pour lanc
 
 ## Construire l'application avec le framework electron
 
-Exécutez `npm run build:electron` pour empaqueter le projet en tant qu'application autonome. Cette commande doit être redémarrée si vous modifiez l'un des fichiers source.
+Exécutez `npm run build:electron` pour empaqueter le projet en tant qu'application autonome. L'application compilée sera disponible dans le répertoire `releases/`. Cette commande doit être redémarrée si vous modifiez l'un des fichiers source.
 
 ## Exécution de tests unitaires
 
