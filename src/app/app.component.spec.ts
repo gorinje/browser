@@ -1,9 +1,28 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { BackComponent } from './toolbar/back/back.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { FontAwesomeModule  } from '@fortawesome/angular-fontawesome';
+import { ForwardComponent } from './toolbar/forward/forward.component';
+import { RefreshComponent } from './toolbar/refresh/refresh.component';
+import { HomeComponent } from './toolbar/home/home.component';
+import { DebugComponent } from './toolbar/debug/debug.component';
+import { AdressComponent } from './toolbar/adress/adress.component';
+import { FormsModule } from '@angular/forms';
 
 describe('AppComponent', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    declarations: [AppComponent]
+    declarations: [
+      AppComponent,
+      ToolbarComponent,
+      BackComponent,
+      ForwardComponent,
+      RefreshComponent,
+      DebugComponent,
+      AdressComponent,
+      HomeComponent
+    ],
+    imports:      [ FontAwesomeModule, FormsModule]
   }));
 
   it('should create the app', () => {
@@ -12,16 +31,4 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'browser'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('browser');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('browser app is running!');
-  });
 });

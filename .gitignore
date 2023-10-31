@@ -5,6 +5,7 @@
 /tmp
 /out-tsc
 /bazel-out
+/releases
 
 # Node
 /node_modules
@@ -19,14 +20,6 @@ yarn-error.log
 *.launch
 .settings/
 *.sublime-workspace
-
-# Visual Studio Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/*
 
 # Miscellaneous
 /.angular/cache

@@ -1,0 +1,6 @@
+<div class="bar-adress">
+    <button>
+        <fa-icon [icon]="faGlobeEurope"></fa-icon>
+    </button>
+    <input #search type="text" class="bar-adress-input" [(ngModel)]="browsingService.url" (keydown)="onKeyDownEvent($event)" (click)="onMouseDown($event)">
+</div>
