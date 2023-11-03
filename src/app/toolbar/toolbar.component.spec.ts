@@ -4,7 +4,6 @@ import { ToolbarComponent } from './toolbar.component';
 import { BackComponent } from './back/back.component';
 import { ForwardComponent } from './forward/forward.component';
 import { RefreshComponent } from './refresh/refresh.component';
-import { HomeComponent } from './home/home.component';
 import { AdressComponent } from './adress/adress.component';
 import { DebugComponent } from './debug/debug.component';
 import { FormsModule } from '@angular/forms';
@@ -21,7 +20,6 @@ describe('ToolbarComponent', () => {
         BackComponent,
         ForwardComponent,
         RefreshComponent,
-        HomeComponent,
         DebugComponent,
         AdressComponent
       ],

@@ -10,7 +10,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "start:electron": "electron .",
+    "start:electron": "ng build --base-href ./ && electron .",
     "build:electron": "ng build --base-href ./ && electron-builder -mwl --publish=never",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

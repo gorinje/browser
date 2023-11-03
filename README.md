@@ -14,7 +14,7 @@ Exécutez `npm run build` pour construire le projet. Les artefacts de constructi
 
 ## Développement dans le framework electron
 
-Exécutez `npm run start` puis en parrallèle `npm run start:electron` pour lancer un environnement de développement de l'application depuis electron. La première commande ouvre un serveur de développement sur Angular et la deuxième affiche le résultat dans electron. Un changement dans l'application Angular est automatiquement mis à jour tandis qu'un changement dans le dossier electron nécessite de redémarrer cette commande.
+Exécutez `npm run start` pour lancer l'environnement de développement de l'application electron. Cette commande doit être redémarrée si vous modifiez l'un des fichiers source.
 
 ## Construire l'application avec le framework electron
 

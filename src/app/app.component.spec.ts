@@ -5,7 +5,6 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { FontAwesomeModule  } from '@fortawesome/angular-fontawesome';
 import { ForwardComponent } from './toolbar/forward/forward.component';
 import { RefreshComponent } from './toolbar/refresh/refresh.component';
-import { HomeComponent } from './toolbar/home/home.component';
 import { DebugComponent } from './toolbar/debug/debug.component';
 import { AdressComponent } from './toolbar/adress/adress.component';
 import { FormsModule } from '@angular/forms';
@@ -19,8 +18,7 @@ describe('AppComponent', () => {
       ForwardComponent,
       RefreshComponent,
       DebugComponent,
-      AdressComponent,
-      HomeComponent
+      AdressComponent
     ],
     imports:      [ FontAwesomeModule, FormsModule]
   }));

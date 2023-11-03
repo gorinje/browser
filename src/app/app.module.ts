@@ -10,7 +10,6 @@ import { ForwardComponent } from './toolbar/forward/forward.component';
 import { RefreshComponent } from './toolbar/refresh/refresh.component';
 import { AdressComponent } from './toolbar/adress/adress.component';
 import { DebugComponent } from './toolbar/debug/debug.component';
-import { HomeComponent } from './toolbar/home/home.component';
 
 @NgModule({
   declarations: [
@@ -20,8 +19,7 @@ import { HomeComponent } from './toolbar/home/home.component';
     ForwardComponent,
     RefreshComponent,
     AdressComponent,
-    DebugComponent,
-    HomeComponent
+    DebugComponent
   ],
   imports: [
     BrowserModule,
