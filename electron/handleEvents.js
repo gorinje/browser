@@ -1,4 +1,4 @@
-const { ipcMain, session } = require("electron");
+const { ipcMain } = require("electron");
 
 function initEventsHandler(mainWin, browserView) {
   const winContent = mainWin.webContents;
@@ -17,18 +17,6 @@ function initEventsHandler(mainWin, browserView) {
   });
 
   ipcMain.handle("cookieviz-start", () => {});
-
-  ipcMain.handle("cookie-update", () => {
-    session.defaultSession.cookies
-      .get({})
-      .then((cookies) => {
-        console.log(cookies);
-        return cookies;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
 
   ipcMain.handle("can-go-back", () => {
     return browserContent.canGoBack();

@@ -38,7 +38,7 @@ export class BrowsingService {
     // this.ipcRenderer.invoke('cookie-update');
   }
   startCookieVizWindow() {
-    this.ipcRenderer.invoke('cookviz-start');
+    this.ipcRenderer.invoke('cookieviz-start');
   }
   setToCurrentUrl() {
     this.ipcRenderer.invoke('current-url').then((url) => {

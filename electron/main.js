@@ -1,6 +1,7 @@
-const { app, BrowserView, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserView, BrowserWindow, session } = require("electron");
 const { initEventsHandler } = require("./handleEvents");
 const isDev = require("electron-is-dev");
+let cookieViz = new Map();
 app.whenReady().then(() => {
   const browserWindow = new BrowserWindow({
     width: 800,
@@ -35,6 +36,17 @@ app.whenReady().then(() => {
   //   const cookieView = new BrowserView();
 
   initEventsHandler(browserWindow, browserView);
+
+  browserView.webContents.on("did-navigate", async (event, url) => {
+    console.log("URL changed:", url);
+    let cookies = await session.defaultSession.cookies.get({});
+    let parsedcookies = new Array();
+    cookies.forEach((cookie) => {
+      parsedcookies.push(cookie.domain);
+    });
+    cookieViz.set(url, parsedcookies);
+    console.log(cookieViz);
+  });
 
   browserWindow.once("ready-to-show", () => {
     browserWindow.setBrowserView(browserView);
