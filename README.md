@@ -18,7 +18,7 @@ Exécutez `npm run start` pour lancer l'environnement de développement de l'app
 
 ## Construire l'application avec le framework electron
 
-Exécutez `npm run build:electron` pour empaqueter le projet en tant qu'application autonome. L'application compilée sera disponible dans le répertoire `releases/`. Cette commande doit être redémarrée si vous modifiez l'un des fichiers source.
+Exécutez `npm run build:mac`, `npm run build:win` ou `npm run build:linux` suivant votre système d'exploitation pour empaqueter le projet en tant qu'application autonome. L'application compilée sera disponible dans le répertoire `releases/`. Cette commande doit être redémarrée si vous modifiez l'un des fichiers source.
 
 ## Exécution de tests unitaires
 
