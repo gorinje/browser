@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IpcRenderer } from 'electron';
+import { EventEmitter } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -51,13 +52,21 @@ export class BrowsingService {
     .then((canGoForward) => this.canGoForward = canGoForward);
   }
 
+  public updateUrl: EventEmitter<any> = new EventEmitter();
+
   constructor() {
     if (window.require){
       this.ipcRenderer = window.require('electron').ipcRenderer;
-    }else{
+    } else{
       // Seulement pour les tests en dehors d'electron
       const ipc = {} as IpcRenderer;
       this.ipcRenderer = ipc;
     }
+    this.ipcRenderer.on('update-url', (event, url, isMainFrame)=>{
+      if (isMainFrame){
+        this.url = url;
+        this.updateUrl.emit();
+      }
+    });
   }
 }
