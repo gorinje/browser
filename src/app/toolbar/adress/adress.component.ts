@@ -12,10 +12,12 @@ export class AdressComponent {
   @ViewChild('search') searchElement: ElementRef = new ElementRef({});
 
   constructor(
-    public browsingService :BrowsingService
-  ) {
-    
-  }
+    public browsingService: BrowsingService
+    ) {
+    this.browsingService.updateUrl.subscribe(() => {
+    this.searchElement.nativeElement.value = this.browsingService.url;
+    });
+    }
 
   onKeyDownEvent(e: any) {
     if (e.key === 'Escape') {
@@ -35,4 +37,5 @@ export class AdressComponent {
   goToPage(url: string) {
     this.browsingService.goToPage(url);
   }
+  
 }

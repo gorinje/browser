@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { IpcRenderer } from 'electron';
 
 @Injectable({
@@ -8,7 +8,7 @@ export class BrowsingService {
   private ipcRenderer: IpcRenderer;
 
   url = 'https://amiens.unilasalle.fr';
-  canGoBack =false;
+  canGoBack = false;
   canGoForward = false;
 
   toogleDevTool() {
@@ -31,33 +31,40 @@ export class BrowsingService {
 
   goToPage(url: string) {
     this.ipcRenderer.invoke('go-to-page', url)
-    .then(() =>this.updateHistory());
+      .then(() => this.updateHistory());
   }
 
   setToCurrentUrl() {
     this.ipcRenderer.invoke('current-url')
-    .then((url)=>{
-      this.url = url;
-    });
+      .then((url) => {
+        this.url = url;
+      });
   }
 
-  updateHistory(){
+  updateHistory() {
     this.setToCurrentUrl();
 
     this.ipcRenderer.invoke('can-go-back')
-    .then((canGoBack) => this.canGoBack = canGoBack);
+      .then((canGoBack) => this.canGoBack = canGoBack);
 
     this.ipcRenderer.invoke('can-go-forward')
-    .then((canGoForward) => this.canGoForward = canGoForward);
+      .then((canGoForward) => this.canGoForward = canGoForward);
   }
 
+  public updateUrl: EventEmitter<any> = new EventEmitter();
   constructor() {
-    if (window.require){
+    if (window.require) {
       this.ipcRenderer = window.require('electron').ipcRenderer;
-    }else{
+    } else {
       // Seulement pour les tests en dehors d'electron
       const ipc = {} as IpcRenderer;
       this.ipcRenderer = ipc;
     }
+    this.ipcRenderer.on('update-url', (event, url, isMainFrame) => {
+      if (isMainFrame) {
+        this.url = url;
+        this.updateUrl.emit();
+      }
+    });
   }
 }
