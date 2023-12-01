@@ -14,7 +14,9 @@ export class AdressComponent {
   constructor(
     public browsingService :BrowsingService
   ) {
-    
+    this.browsingService.updateUrl.subscribe(() => {
+      this.searchElement.nativeElement.value = this.browsingService.url;
+      });
   }
 
   onKeyDownEvent(e: any) {
