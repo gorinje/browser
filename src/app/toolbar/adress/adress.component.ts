@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { faGlobeEurope } from '@fortawesome/free-solid-svg-icons';
 import { BrowsingService } from 'src/app/services/browsing.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-adress',
@@ -32,7 +33,30 @@ export class AdressComponent {
     this.searchElement.nativeElement.select();
   };
 
-  goToPage(url: string) {
-    this.browsingService.goToPage(url);
+  async goToPage(url: string) {
+    let fullUrl = url.startsWith('http://') || url.startsWith('https://') ? url : 'https://' + url;
+  
+    try {
+      let response = await fetch(fullUrl);
+      if (!response.ok) throw new Error('Essai avec HTTP');
+      this.browsingService.goToPage(fullUrl);
+    } catch (error) {
+      if (fullUrl.startsWith('https://')) {
+        // Réessayer avec HTTP
+        fullUrl = 'http://' + url;
+        fetch(fullUrl).then(response => {
+          if (response.ok) {
+            this.browsingService.goToPage(fullUrl);
+          } else {
+            console.error('Erreur : Impossible de charger l\'URL');
+          }
+        }).catch(() => {
+          console.error('Erreur : Impossible de charger l\'URL');
+        });
+      } else {
+        console.error('Erreur : Impossible de charger l\'URL');
+      }
+    }
   }
+  
 }
