@@ -30,6 +30,7 @@
     "@angular/router": "^16.1.0",
     "@fortawesome/angular-fontawesome": "^0.13.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "axios": "^1.6.2",
     "electron-is-dev": "^2.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

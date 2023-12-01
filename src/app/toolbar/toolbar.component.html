@@ -5,5 +5,8 @@
     <app-adress></app-adress>
     <app-home></app-home>
     <app-debug></app-debug>
-    <button (click)="captureScreen()">Capture Screen</button>
+    <button (click)="translatePage()">Traduire en Anglais</button>
+    <div *ngIf="translatedText">
+        <p>Texte Traduit: {{ translatedText }}</p>
+    </div>
 </div>

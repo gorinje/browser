@@ -2,6 +2,8 @@ const { app, BrowserWindow, BrowserView, ipcMain } = require('electron');
 const { initEventsHandler } = require('./handleEvents');
 const isDev = require("electron-is-dev");
 const path = require("path");
+const axios = require('axios');
+const DEEPL_API_KEY = 'c48168fe-3f1d-c7a2-34cb-3625a5f84d5d:fx';
 
 let browserWindow;
 let browserView;
@@ -48,6 +50,42 @@ app.whenReady().then(() => {
             console.error('Erreur lors de la capture de la page :', error);
         }
     });
+
+    ipcMain.on('extract-text', (event) => {
+        browserView.webContents.executeJavaScript(`document.body.innerText;`)
+        .then(result => {
+          event.reply('extract-text-reply', result);
+        })
+        .catch(error => {
+          console.error('Erreur lors de lextrac du texte', error);
+          event.reply('extract-text-reply', '');
+        });
+    });
+
+    ipcMain.on('translate-text', async (event, text, targetLang) => {
+        try {
+          const response = await axios.post(`https://api.deepl.com/v2/translate`, querystring.stringify({
+            auth_key: DEEPL_API_KEY,
+            text: text,
+            target_lang: targetLang
+          }), {
+            headers: { 
+              'Content-Type': 'application/x-www-form-urlencoded' 
+            }
+          });
+      
+          event.reply('translate-text-reply', response.data.translations[0].text);
+        } catch (error) {
+          console.error('Erreur de traduction :', error);
+          event.reply('translate-text-reply', '');
+        }
+    });
+
+
 });
 
-// ... le reste de votre code
+
+
+
+
+

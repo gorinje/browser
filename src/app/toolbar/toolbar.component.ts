@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone, OnDestroy } from '@angular/core';
 
 declare const window: any;
 const ipcRenderer = window.require('electron').ipcRenderer;
@@ -8,7 +8,25 @@ const ipcRenderer = window.require('electron').ipcRenderer;
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.css']
 })
-export class ToolbarComponent {
+export class ToolbarComponent implements OnDestroy {
+
+  translatedText: string = '';
+
+  constructor(private ngZone: NgZone) {
+    ipcRenderer.on('translate-text-reply', (event: any, translatedText: string) => {
+      this.ngZone.run(() => {
+        this.translatedText = translatedText;
+      });
+    });
+  }
+  
+  ngOnDestroy() {
+    ipcRenderer.removeAllListeners('translate-text-reply');
+  }
+
+  translatePage() {
+    ipcRenderer.send('extract-text');
+  }
 
   captureScreen() {
     ipcRenderer.send('capture-page');
@@ -39,3 +57,4 @@ export class ToolbarComponent {
   }
  
 }
+
