@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { IpcRenderer } from 'electron';
+import { EventEmitter } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BrowsingService {
   private ipcRenderer: IpcRenderer;
+  public updateUrl: EventEmitter<any> = new EventEmitter();
+
 
   url = 'https://amiens.unilasalle.fr';
   canGoBack =false;
@@ -50,14 +53,23 @@ export class BrowsingService {
     this.ipcRenderer.invoke('can-go-forward')
     .then((canGoForward) => this.canGoForward = canGoForward);
   }
+  
 
   constructor() {
     if (window.require){
-      this.ipcRenderer = window.require('electron').ipcRenderer;
+    this.ipcRenderer = window.require('electron').ipcRenderer;
     }else{
-      // Seulement pour les tests en dehors d'electron
-      const ipc = {} as IpcRenderer;
-      this.ipcRenderer = ipc;
+    // Seulement pour les tests en dehors d'electron
+    const ipc = {} as IpcRenderer;
+    this.ipcRenderer = ipc;
     }
-  }
+    this.ipcRenderer.on('update-url', (event, url, isMainFrame)=>{
+    if (isMainFrame){
+    this.url = url;
+    this.updateUrl.emit();
+    }
+    });
+    }
 }
+
+
