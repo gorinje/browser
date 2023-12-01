@@ -2,6 +2,8 @@ const { app, BrowserView, BrowserWindow, ipcMain} = require('electron');
 const{initEventsHandler} = require('./handleEvents');
 const isDev = require("electron-is-dev");
 const path = require("path");
+const { dialog } = require('electron');
+const axios = require('axios');
 
 app.whenReady().then(() => {
     const browserWindow = new BrowserWindow({

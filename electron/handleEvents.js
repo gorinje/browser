@@ -1,4 +1,5 @@
 const { ipcMain } = require('electron');
+const { dialog } = require('electron');
 
 function initEventsHandler(mainWin, browserView) {
     const winContent = mainWin.webContents;
@@ -44,6 +45,29 @@ function initEventsHandler(mainWin, browserView) {
     ipcMain.handle('current-url', () => {
         return browserContent.getURL();
     });
+        /* FONCTION CAPTURE D'ECRAN */
+        ipcMain.handle('capture-page', async (event) => {
+            const image = await browserContent.capturePage();
+            const imageBuffer = image.toPNG();
+          
+            // Ouvrir le dialogue pour enregistrer le fichier
+            const { filePath } = await dialog.showSaveDialog({
+              title: 'Enregistrer la capture d\'écran',
+              defaultPath: 'capture.png',
+              buttonLabel: 'Enregistrer',
+              filters: [
+                { name: 'Images', extensions: ['png'] }
+              ]
+            });
+          
+            if (filePath) {
+              // Écrire le fichier sur le disque
+              require('fs').writeFileSync(filePath, imageBuffer);
+            }
+          
+            return filePath;
+          });
+          /****************************/
 }
 
 module.exports = { initEventsHandler };

@@ -1,0 +1,11 @@
+<!-- favoris-bar.component.html -->
+<div class="favoris-bar">
+    <div *ngFor="let favorite of favorites; let i = index">
+      <span>{{ favorite }}</span>
+      <button (click)="removeFavorite(i)">Supprimer</button>
+    </div>
+  
+    <!-- Ajout du bouton temporaire -->
+    <button (click)="testVisibility()">Test de visibilité</button>
+  </div>
+  

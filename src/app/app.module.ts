@@ -11,6 +11,14 @@ import { RefreshComponent } from './toolbar/refresh/refresh.component';
 import { AdressComponent } from './toolbar/adress/adress.component';
 import { DebugComponent } from './toolbar/debug/debug.component';
 import { HomeComponent } from './toolbar/home/home.component';
+import { ScreenshotComponent } from './toolbar/screenshot/screenshot.component';
+import { AdressBarComponent } from './toolbar/adress-bar/adress-bar.component';
+import { FavorisBarComponent } from './toolbar/favoris-bar/favoris-bar.component';
+import { HistoryComponent } from './toolbar/history/history.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+
+
 
 @NgModule({
   declarations: [
@@ -21,12 +29,18 @@ import { HomeComponent } from './toolbar/home/home.component';
     RefreshComponent,
     AdressComponent,
     DebugComponent,
-    HomeComponent
+    HomeComponent,
+    ScreenshotComponent,
+    AdressBarComponent,
+    FavorisBarComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatDialogModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
