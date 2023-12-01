@@ -4,6 +4,10 @@ function initEventsHandler(mainWin, browserView) {
     const winContent = mainWin.webContents;
     const browserContent = browserView.webContents;
 
+    browserContent.on('did-start-navigation', (event) => {
+      winContent.send('update-url', event.url, event.isMainFrame);
+    });
+
     ipcMain.handle('toogle-dev-tool', () => {
         if (winContent.isDevToolsOpened()) {
             winContent.closeDevTools();
@@ -23,7 +27,7 @@ function initEventsHandler(mainWin, browserView) {
     ipcMain.handle('go-forward', () => {
         browserContent.goForward();
     });
-    
+
     ipcMain.handle('refresh', () => {
         browserContent.reload();
     });
