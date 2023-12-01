@@ -11,10 +11,10 @@ export class AdressComponent {
   faGlobeEurope = faGlobeEurope;
   @ViewChild('search') searchElement: ElementRef = new ElementRef({});
 
-  constructor(
-    public browsingService :BrowsingService
-  ) {
-    
+  constructor(public browsingService :BrowsingService) {
+    this.browsingService.updateUrl.subscribe(()=>{
+      this.searchElement.nativeElement.value = this.browsingService.url;
+      });
   }
 
   onKeyDownEvent(e: any) {
@@ -35,4 +35,5 @@ export class AdressComponent {
   goToPage(url: string) {
     this.browsingService.goToPage(url);
   }
+  
 }
