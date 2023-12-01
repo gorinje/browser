@@ -1,0 +1,19 @@
+button {
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+button:hover {
+    background-color: gainsboro;
+}
+
+button:active {
+    background-color: silver;
+}
