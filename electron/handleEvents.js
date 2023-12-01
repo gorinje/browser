@@ -40,7 +40,6 @@ function initEventsHandler(mainWin, browserView) {
         return browserContent.loadURL(url);
     });
 
-
     ipcMain.handle('current-url', () => {
         return browserContent.getURL();
     });
