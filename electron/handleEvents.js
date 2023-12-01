@@ -40,6 +40,10 @@ function initEventsHandler(mainWin, browserView) {
     ipcMain.handle('current-url', () => {
         return browserContent.getURL();
     });
+
+    browserContent.on('did-start-navigation', (event)=>{
+        winContent.send('update-url', event.url, event.isMainFrame);
+        })
 }
 
 module.exports = { initEventsHandler };
