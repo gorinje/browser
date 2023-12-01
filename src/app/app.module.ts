@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { WebContents } from 'electron';
 
 import { AppComponent } from './app.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
@@ -11,6 +12,7 @@ import { RefreshComponent } from './toolbar/refresh/refresh.component';
 import { AdressComponent } from './toolbar/adress/adress.component';
 import { DebugComponent } from './toolbar/debug/debug.component';
 import { HomeComponent } from './toolbar/home/home.component';
+import { CaptureComponent } from './toolbar/capture/capture.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { HomeComponent } from './toolbar/home/home.component';
     RefreshComponent,
     AdressComponent,
     DebugComponent,
-    HomeComponent
+    HomeComponent,
+    CaptureComponent
   ],
   imports: [
     BrowserModule,
