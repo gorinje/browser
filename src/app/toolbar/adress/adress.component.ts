@@ -25,8 +25,15 @@ export class AdressComponent {
       e.currentTarget.blur();
       this.browsingService.setToCurrentUrl();
     } else if (e.key === 'Enter') {
-      const value = e.currentTarget.value;
+      let value = e.currentTarget.value;
       e.currentTarget.blur();
+
+      // Vérifier si l'URL contient déjà un protocole
+      if (!/^https?:\/\//i.test(value)) {
+        // Ajouter le protocole http s'il est absent
+        value = 'http://' + value;
+      }
+
       this.goToPage(value);
     }
   }
