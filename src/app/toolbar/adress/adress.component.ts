@@ -31,7 +31,25 @@ export class AdressComponent {
       // Vérifier si l'URL contient déjà un protocole
       if (!/^https?:\/\//i.test(value)) {
         // Ajouter le protocole http s'il est absent
-        value = 'http://' + value;
+        let valueHttps = 'https://' + value;
+
+        // tester l'accès à l'URL
+        const request = new XMLHttpRequest();
+        request.open('GET', valueHttps, false);
+        request.send();
+        if (request.status === 200) {
+          value = valueHttps;
+        } else {
+          // Ajouter le protocole http s'il est absent
+          let valueHttp = 'http://' + value;
+          // tester l'accès à l'URL
+          const request = new XMLHttpRequest();
+          request.open('GET', valueHttp, false);
+          request.send();
+          if (request.status === 200) {
+            value = valueHttp;
+          }
+        }
       }
 
       this.goToPage(value);
@@ -44,5 +62,9 @@ export class AdressComponent {
 
   goToPage(url: string) {
     this.browsingService.goToPage(url);
+  }
+
+  addToHistory(url: string) {
+    this.browsingService.addToHistory(url);
   }
 }
