@@ -1,4 +1,4 @@
-const { ipcMain } = require('electron');
+const { ipcMain, ipcRenderer, dialog} = require('electron');
 
 function initEventsHandler(mainWin, browserView) {
     const winContent = mainWin.webContents;
@@ -23,7 +23,7 @@ function initEventsHandler(mainWin, browserView) {
     ipcMain.handle('go-forward', () => {
         browserContent.goForward();
     });
-    
+
     ipcMain.handle('refresh', () => {
         browserContent.reload();
     });
@@ -40,6 +40,22 @@ function initEventsHandler(mainWin, browserView) {
     ipcMain.handle('current-url', () => {
         return browserContent.getURL();
     });
+
+
+    ipcMain.on('generate-pdf', (event, { options }) => {
+      browserContent.printToPDF(options).then(data => {
+        event.sender.send('pdf-generated', data.toString('base64'));
+      }).catch(error => {
+        console.log(error);
+        event.sender.send('pdf-generated', false);
+      });
+    });
+
+
+    browserContent.on('did-start-navigation', (event)=>{
+      winContent.send('update-url', event.url, event.isMainFrame);
+    })
+
 }
 
 module.exports = { initEventsHandler };

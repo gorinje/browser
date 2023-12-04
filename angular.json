@@ -17,8 +17,7 @@
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
-              "zone.js"
-            ],
+              "zone.js"],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
@@ -79,8 +78,7 @@
           "options": {
             "polyfills": [
               "zone.js",
-              "zone.js/testing"
-            ],
+              "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
               "src/favicon.ico",
