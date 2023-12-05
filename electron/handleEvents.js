@@ -1,9 +1,9 @@
-const { ipcMain, session, ipcRenderer, BrowserWindow } = require("electron");
+const { ipcMain, session } = require("electron");
 
-function initEventsHandler(mainWin, browserView) {
+function initEventsHandler(mainWin, browserView, cookieWin) {
   const winContent = mainWin.webContents;
   const browserContent = browserView.webContents;
-
+  const cookieContent = cookieWin.webContents;
   browserContent.on("did-navigate", async (event, url) => {
     console.log("URL changed:", url);
     let cookies = await session.defaultSession.cookies.get({});
@@ -12,22 +12,12 @@ function initEventsHandler(mainWin, browserView) {
       parsedcookies.push(cookie.domain);
     });
     winContent.send("cookies", { url: url, cookies: parsedcookies });
+    cookieContent.send("cookies", { url: url, cookies: parsedcookies });
   });
 
   ipcMain.handle("open-cookie-win", () => {
-    const cookieWindow = new BrowserWindow({
-      title: "COOKIEVIZ 2.0",
-      width: 640,
-      height: 360,
-      webPreferences: {
-        contextIsolation: false,
-        nodeIntegration: true,
-        webSecurity: false,
-      },
-      backgroundColor: "gray",
-      resizable: false,
-    });
-    cookieWindow.loadURL("http://localhost:4200/index.html#cookies");
+    cookieWin.loadURL("http://localhost:4200/index.html#cookies");
+    cookieWin.show();
   });
 
   ipcMain.handle("toogle-dev-tool", () => {

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IpcRenderer } from 'electron';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ export class BrowsingService {
   url = 'https://amiens.unilasalle.fr';
   canGoBack = false;
   canGoForward = false;
-  public cookies: Map<String, Array<String>> = new Map();
+  private cookies$ = new BehaviorSubject(new Map<String, String[]>());
 
   toogleDevTool() {
     this.ipcRenderer.invoke('toogle-dev-tool');
@@ -56,14 +57,16 @@ export class BrowsingService {
   openCookieWindow() {
     this.ipcRenderer.invoke('open-cookie-win');
   }
+  setCookies(base: String, cookies: String[]) {
+    let c = this.cookies$.getValue();
+    c.set(base, cookies);
+    this.cookies$.next(c);
+  }
 
   getCookies() {
-    let domains = new Array<String>();
-    this.cookies.forEach((v, s) => {
-      domains = domains.concat(v);
-    });
-    return domains;
+    return this.cookies$.asObservable();
   }
+
   constructor() {
     if (window.require) {
       this.ipcRenderer = window.require('electron').ipcRenderer;
@@ -74,7 +77,8 @@ export class BrowsingService {
     }
 
     this.ipcRenderer.on('cookies', (event, data) => {
-      this.cookies.set(data.url, data.cookies);
+      this.setCookies(data.url, data.cookies);
+      console.log(this.cookies$.getValue());
     });
   }
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BrowsingService } from '../services/browsing.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-cookieviz',
@@ -7,5 +8,13 @@ import { BrowsingService } from '../services/browsing.service';
   styleUrls: ['./cookieviz.component.css'],
 })
 export class CookievizComponent {
-  constructor(public browsingService: BrowsingService) {}
+  cookies: Observable<Map<String, String[]>>;
+  log() {
+    console.log('cookie refresh');
+    console.log(this.cookies);
+  }
+
+  constructor(public browsingService: BrowsingService) {
+    this.cookies = browsingService.getCookies();
+  }
 }

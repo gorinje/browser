@@ -12,6 +12,21 @@ app.whenReady().then(() => {
       webSecurity: false,
     },
   });
+  const cookieWindow = new BrowserWindow({
+    parent: browserWindow,
+    title: "COOKIEVIZ 2.0",
+    width: 640,
+    height: 360,
+    webPreferences: {
+      contextIsolation: false,
+      nodeIntegration: true,
+      webSecurity: false,
+    },
+    backgroundColor: "gray",
+    resizable: false,
+    show: false,
+    closable: false,
+  });
 
   if (isDev) {
     browserWindow.loadURL("http://localhost:4200/");
@@ -20,7 +35,7 @@ app.whenReady().then(() => {
   }
 
   const browserView = new BrowserView();
-  initEventsHandler(browserWindow, browserView);
+  initEventsHandler(browserWindow, browserView, cookieWindow);
 
   browserWindow.once("ready-to-show", () => {
     browserWindow.setBrowserView(browserView);

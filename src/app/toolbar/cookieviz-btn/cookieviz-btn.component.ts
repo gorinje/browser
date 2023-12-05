@@ -9,8 +9,5 @@ import { BrowsingService } from 'src/app/services/browsing.service';
 })
 export class CookievizBtnComponent {
   faCookie = faCookie;
-  log() {
-    console.log(this.browsingService.getCookies());
-  }
   constructor(public browsingService: BrowsingService) {}
 }
