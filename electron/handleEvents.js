@@ -1,8 +1,20 @@
-const { ipcMain } = require("electron");
+const { ipcMain, session, ipcRenderer } = require("electron");
 
 function initEventsHandler(mainWin, browserView) {
   const winContent = mainWin.webContents;
   const browserContent = browserView.webContents;
+  let cookieViz = new Map();
+
+  browserContent.on("did-navigate", async (event, url) => {
+    console.log("URL changed:", url);
+    let cookies = await session.defaultSession.cookies.get({});
+    let parsedcookies = new Array();
+    cookies.forEach((cookie) => {
+      parsedcookies.push(cookie.domain);
+    });
+    cookieViz.set(url, parsedcookies);
+    winContent.send("cookies", "ping");
+  });
 
   ipcMain.handle("toogle-dev-tool", () => {
     if (winContent.isDevToolsOpened()) {

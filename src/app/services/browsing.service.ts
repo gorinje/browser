@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cookie, IpcRenderer } from 'electron';
+import { Cookie, IpcRenderer, ipcMain } from 'electron';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +27,7 @@ export class BrowsingService {
 
   refresh() {
     this.ipcRenderer.invoke('refresh');
+    console.log('refresh');
   }
 
   goToPage(url: string) {
@@ -59,9 +60,10 @@ export class BrowsingService {
       // Seulement pour les tests en dehors d'electron
       const ipc = {} as IpcRenderer;
       this.ipcRenderer = ipc;
-      // this.ipcRenderer.on('cookies', (c) => {
-      //   console.log('pong');
-      // });
     }
+
+    this.ipcRenderer.on('cookies', (event, data) => {
+      console.log('pong : ', data);
+    });
   }
 }
