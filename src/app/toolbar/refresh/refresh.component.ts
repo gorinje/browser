@@ -5,14 +5,9 @@ import { BrowsingService } from 'src/app/services/browsing.service';
 @Component({
   selector: 'app-refresh',
   templateUrl: './refresh.component.html',
-  styleUrls: ['./refresh.component.css']
+  styleUrls: ['./refresh.component.css'],
 })
 export class RefreshComponent {
-  faRefresh=faRefresh;
-
-  constructor(
-    public browsingService :BrowsingService
-  ) {
-
-  }
+  faRefresh = faRefresh;
+  constructor(public browsingService: BrowsingService) {}
 }

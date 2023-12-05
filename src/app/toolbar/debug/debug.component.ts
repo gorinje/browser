@@ -5,14 +5,10 @@ import { BrowsingService } from 'src/app/services/browsing.service';
 @Component({
   selector: 'app-debug',
   templateUrl: './debug.component.html',
-  styleUrls: ['./debug.component.css']
+  styleUrls: ['./debug.component.css'],
 })
 export class DebugComponent {
   faBug = faBug;
 
-  constructor(
-    public browsingService :BrowsingService
-  ) {
-
-  }
+  constructor(public browsingService: BrowsingService) {}
 }

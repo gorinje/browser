@@ -11,6 +11,7 @@ import { RefreshComponent } from './toolbar/refresh/refresh.component';
 import { AdressComponent } from './toolbar/adress/adress.component';
 import { DebugComponent } from './toolbar/debug/debug.component';
 import { CookievizComponent } from './cookieviz/cookieviz.component';
+import { CookievizBtnComponent } from './toolbar/cookieviz-btn/cookieviz-btn.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { CookievizComponent } from './cookieviz/cookieviz.component';
     RefreshComponent,
     AdressComponent,
     DebugComponent,
+    CookievizBtnComponent,
   ],
   imports: [BrowserModule, FormsModule, FontAwesomeModule],
   providers: [],

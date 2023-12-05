@@ -7,7 +7,7 @@ import { RefreshComponent } from './refresh/refresh.component';
 import { AdressComponent } from './adress/adress.component';
 import { DebugComponent } from './debug/debug.component';
 import { FormsModule } from '@angular/forms';
-import { FontAwesomeModule  } from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 describe('ToolbarComponent', () => {
   let component: ToolbarComponent;
@@ -21,9 +21,9 @@ describe('ToolbarComponent', () => {
         ForwardComponent,
         RefreshComponent,
         DebugComponent,
-        AdressComponent
+        AdressComponent,
       ],
-      imports:      [ FontAwesomeModule, FormsModule ]
+      imports: [FontAwesomeModule, FormsModule],
     });
     fixture = TestBed.createComponent(ToolbarComponent);
     component = fixture.componentInstance;

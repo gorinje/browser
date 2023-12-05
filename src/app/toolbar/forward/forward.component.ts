@@ -5,14 +5,10 @@ import { BrowsingService } from 'src/app/services/browsing.service';
 @Component({
   selector: 'app-forward',
   templateUrl: './forward.component.html',
-  styleUrls: ['./forward.component.css']
+  styleUrls: ['./forward.component.css'],
 })
 export class ForwardComponent {
   faArrowRight = faArrowRight;
-  
-  constructor(
-    public browsingService :BrowsingService
-      ) {
 
-  }
+  constructor(public browsingService: BrowsingService) {}
 }

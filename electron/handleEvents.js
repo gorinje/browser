@@ -13,7 +13,7 @@ function initEventsHandler(mainWin, browserView) {
       parsedcookies.push(cookie.domain);
     });
     cookieViz.set(url, parsedcookies);
-    winContent.send("cookies", "ping");
+    winContent.send("cookies", cookieViz);
   });
 
   ipcMain.handle("toogle-dev-tool", () => {
