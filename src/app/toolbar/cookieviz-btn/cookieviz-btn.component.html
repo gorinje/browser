@@ -1,3 +1,5 @@
-<button (click)="browsingService.refresh()">
-  <fa-icon [icon]="faCookie"></fa-icon>
-</button>
+<a>
+  <button (click)="browsingService.openCookieWindow(); log()">
+    <fa-icon [icon]="faCookie"></fa-icon>
+  </button>
+</a>

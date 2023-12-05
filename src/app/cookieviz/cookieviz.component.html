@@ -1,1 +1,8 @@
 <p>cookieviz works!</p>
+<p>cookie : {{ browsingService.getCookies().length }}</p>
+<ul>
+  <li *ngFor="let cookie of browsingService.cookies.entries()">
+    <p>3</p>
+    <h3>{{ cookie }}</h3>
+  </li>
+</ul>

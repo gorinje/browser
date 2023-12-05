@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cookie, IpcRenderer, ipcMain } from 'electron';
+import { IpcRenderer } from 'electron';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +10,7 @@ export class BrowsingService {
   url = 'https://amiens.unilasalle.fr';
   canGoBack = false;
   canGoForward = false;
+  public cookies: Map<String, Array<String>> = new Map();
 
   toogleDevTool() {
     this.ipcRenderer.invoke('toogle-dev-tool');
@@ -52,7 +53,17 @@ export class BrowsingService {
       .invoke('can-go-forward')
       .then((canGoForward) => (this.canGoForward = canGoForward));
   }
+  openCookieWindow() {
+    this.ipcRenderer.invoke('open-cookie-win');
+  }
 
+  getCookies() {
+    let domains = new Array<String>();
+    this.cookies.forEach((v, s) => {
+      domains = domains.concat(v);
+    });
+    return domains;
+  }
   constructor() {
     if (window.require) {
       this.ipcRenderer = window.require('electron').ipcRenderer;
@@ -63,7 +74,7 @@ export class BrowsingService {
     }
 
     this.ipcRenderer.on('cookies', (event, data) => {
-      console.log('pong : ', data);
+      this.cookies.set(data.url, data.cookies);
     });
   }
 }
