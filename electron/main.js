@@ -1,7 +1,9 @@
 const { app, BrowserView, BrowserWindow, session } = require("electron");
 const { initEventsHandler } = require("./handleEvents");
 const isDev = require("electron-is-dev");
+
 let cookieViz = new Map();
+
 app.whenReady().then(() => {
   const browserWindow = new BrowserWindow({
     width: 800,
@@ -13,18 +15,18 @@ app.whenReady().then(() => {
     },
   });
 
-  const cookieWindow = new BrowserWindow({
-    title: "COOKIEVIZ 2.0",
-    width: 640,
-    height: 360,
-    webPreferences: {
-      contextIsolation: false,
-      nodeIntegration: true,
-      webSecurity: false,
-    },
-    backgroundColor: "gray",
-    resizable: false,
-  });
+  // const cookieWindow = new BrowserWindow({
+  //   title: "COOKIEVIZ 2.0",
+  //   width: 640,
+  //   height: 360,
+  //   webPreferences: {
+  //     contextIsolation: false,
+  //     nodeIntegration: true,
+  //     webSecurity: false,
+  //   },
+  //   backgroundColor: "gray",
+  //   resizable: false,
+  // });
 
   if (isDev) {
     browserWindow.loadURL("http://localhost:4200/");
@@ -37,6 +39,7 @@ app.whenReady().then(() => {
 
   initEventsHandler(browserWindow, browserView);
 
+  // cookieviz handler
   browserView.webContents.on("did-navigate", async (event, url) => {
     console.log("URL changed:", url);
     let cookies = await session.defaultSession.cookies.get({});

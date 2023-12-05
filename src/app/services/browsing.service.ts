@@ -15,10 +15,6 @@ export class BrowsingService {
     this.ipcRenderer.invoke('toogle-dev-tool');
   }
 
-  getCookies(): Promise<Cookie[]> {
-    return this.ipcRenderer.invoke('cookie-update');
-  }
-
   goBack() {
     this.ipcRenderer.invoke('go-back');
     this.updateHistory();
@@ -37,9 +33,7 @@ export class BrowsingService {
     this.ipcRenderer.invoke('go-to-page', url).then(() => this.updateHistory());
     // this.ipcRenderer.invoke('cookie-update');
   }
-  startCookieVizWindow() {
-    this.ipcRenderer.invoke('cookieviz-start');
-  }
+
   setToCurrentUrl() {
     this.ipcRenderer.invoke('current-url').then((url) => {
       this.url = url;
@@ -65,6 +59,9 @@ export class BrowsingService {
       // Seulement pour les tests en dehors d'electron
       const ipc = {} as IpcRenderer;
       this.ipcRenderer = ipc;
+      // this.ipcRenderer.on('cookies', (c) => {
+      //   console.log('pong');
+      // });
     }
   }
 }

@@ -21,14 +21,9 @@ import { CookievizComponent } from './cookieviz/cookieviz.component';
     RefreshComponent,
     AdressComponent,
     DebugComponent,
-    CookievizComponent
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    FontAwesomeModule
-  ],
+  imports: [BrowserModule, FormsModule, FontAwesomeModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

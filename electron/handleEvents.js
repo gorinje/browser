@@ -16,8 +16,6 @@ function initEventsHandler(mainWin, browserView) {
     browserContent.goBack();
   });
 
-  ipcMain.handle("cookieviz-start", () => {});
-
   ipcMain.handle("can-go-back", () => {
     return browserContent.canGoBack();
   });
