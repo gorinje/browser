@@ -12,6 +12,7 @@ import { AdressComponent } from './toolbar/adress/adress.component';
 import { DebugComponent } from './toolbar/debug/debug.component';
 import { HomeComponent } from './toolbar/home/home.component';
 import { CaptureComponent } from './toolbar/capture/capture.component';
+import { TranslateComponent } from './toolbar/translate/translate.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { CaptureComponent } from './toolbar/capture/capture.component';
     AdressComponent,
     DebugComponent,
     HomeComponent,
-    CaptureComponent
+    CaptureComponent,
+    TranslateComponent
   ],
   imports: [
     BrowserModule,

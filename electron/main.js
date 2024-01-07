@@ -3,6 +3,7 @@ const { initEventsHandler } = require('./handleEvents');
 const isDev = require("electron-is-dev");
 const path = require("path");
 const fs = require('fs');
+const axios = require('axios');
 
 app.whenReady().then(() => {
     const browserWindow = new BrowserWindow({
@@ -57,6 +58,7 @@ app.whenReady().then(() => {
             });
         });
     });
+      
 
     if (isDev) {
         browserWindow.loadURL("http://localhost:4200/");
