@@ -53,53 +53,59 @@ function initEventsHandler(mainWin, browserView) {
         return browserContent.getURL();
     });
 
-    ipcMain.on('translate-page', async (event) => {
-        try {
-            // Extraire les éléments textuels des éléments spécifiques
-            const textElements = await browserView.webContents.executeJavaScript(`
-                [...document.querySelectorAll('p, h1, h2, h3, h4, h5, h6, button, span, a')]
-                    .filter(element => element.textContent.trim().length > 0)
-                    .map(element => element.textContent.trim());
-            `);
-    
-            console.log('Text elements:', textElements);
+ipcMain.on('translate-page', async (event) => {
+    try {
+        // Extraire le code HTML de la page entière
+        const htmlContent = await browserView.webContents.executeJavaScript('document.documentElement.outerHTML');
 
-            // Traduire les éléments textuels un par un
+        // Diviser le HTML en segments de 50 lignes
+        const lines = htmlContent.split('\n');
+        const segments = [];
+        while (lines.length) {
+            segments.push(lines.splice(0, 10).join('\n'));
+        }
 
-            for (let i = 0; i < textElements.length; i++) {
-                const text = textElements[i];
+        // Traduire chaque segment
+        let translatedSegments = [];
+        var response;
+        for (const segment of segments) {
 
-                const response = await axios.post('https://translation.googleapis.com/language/translate/v2?key=AIzaSyCwkGQA9Lodaa9zi1azzsX6dNdXx8tR05w', {
-                    q: text,
-                    target: 'fr' // Remplacez par la langue cibl
-                });
+            try {
 
-                const translatedText = response.data.data.translations[0].translatedText;
-                textElements[i] = translatedText;
+            response = await axios.post('https://translation.googleapis.com/language/translate/v2?key=AIzaSyCvRNLC-Z-U3e-E2PClF5aDCFy99sPYJo4',
+                {
+                    q: segment,
+                    target: 'fr',
+                    format: 'html'
+                }
+            );
+
+            } catch (error) {
+                console.error('Error translating segment:', error);
+                event.reply('translate-page-reply', `Error: ${error.message}`);
             }
 
-            // Injecter les éléments textuels traduits dans la page à leur élément d'origine
-            await browserView.webContents.executeJavaScript(`
-                const textElements = ${JSON.stringify(textElements)};
-                const elements = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6, button, span, a');
-                elements.forEach((element, index) => {
-                    const textNodes = [...element.childNodes].filter(node => node.nodeType === Node.TEXT_NODE);
-                    if (textNodes.length > 0 && textElements[index]) {
-                        textNodes.forEach(node => node.textContent = textElements[index]);
-                    }
-                });
-            `);
-
-            console.log("Translation ended");
-    
-            // Signaler la fin de la traduction
-            event.reply('translate-page-reply', 'Translation completed');
-        } catch (error) {
-            console.error('Error translating page:', error);
-            event.reply('translate-page-reply', `Error: ${error.message}`);
+            const translatedSegment = response.data.data.translations[0].translatedText;
+            translatedSegments.push(translatedSegment);
         }
-    });
-    
+
+        // Reconstituer le HTML traduit
+        const translatedHtml = translatedSegments.join('\n');
+
+        console.log('Translated HTML:', translatedHtml);
+
+        // Remplacer le contenu de la page par le HTML traduit
+        await browserView.webContents.executeJavaScript(`
+            document.body.innerHTML = ${JSON.stringify(translatedHtml)};
+        `);
+
+        console.log("Translation completed");
+        event.reply('translate-page-reply', 'Translation completed');
+    } catch (error) {
+        console.error('Error translating page:', error);
+        event.reply('translate-page-reply', `Error: ${error.message}`);
+    }
+});
 
 }
 
