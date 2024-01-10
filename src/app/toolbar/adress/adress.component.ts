@@ -35,6 +35,32 @@ export class AdressComponent {
   };
 
   goToPage(url: string) {
-    this.browsingService.goToPage(url);
+    // Si l'URL ne commence ni par 'http://' ni par 'https://', ajoutez 'https://'
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      this.tryLoadUrl('https://' + url, (success) => {
+        if (!success) {
+          // Si le chargement en HTTPS échoue, essayez en HTTP
+          this.tryLoadUrl('http://' + url);
+        }
+      });
+    } else {
+      this.browsingService.goToPage(url);
+    }
+  }
+
+  tryLoadUrl(url: string, callback?: (success: boolean) => void) {
+
+    fetch(url, { mode: 'no-cors' })
+      .then(response => {
+        if (response.ok || response.type === 'opaque') {
+          this.browsingService.goToPage(url);
+          callback?.(true);
+        } else {
+          callback?.(false);
+        }
+      })
+      .catch(() => {
+        callback?.(false);
+      });
   }
 }
