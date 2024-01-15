@@ -1,3 +1,7 @@
 <button (click)="log()">refresh</button>
-<highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions">
+<highcharts-chart
+  [Highcharts]="Highcharts"
+  [options]="chartOptions"
+  [(update)]="updateFlag"
+>
 </highcharts-chart>

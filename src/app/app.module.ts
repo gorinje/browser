@@ -12,7 +12,6 @@ import { DebugComponent } from './toolbar/debug/debug.component';
 import { CookievizBtnComponent } from './toolbar/cookieviz-btn/cookieviz-btn.component';
 import { Routes, RouterModule } from '@angular/router';
 import { CookievizComponent } from './cookieviz/cookieviz.component';
-import { HighchartsChartModule } from 'highcharts-angular';
 
 const routes: Routes = [
   { path: '', component: ToolbarComponent },

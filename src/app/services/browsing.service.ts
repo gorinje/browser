@@ -34,7 +34,6 @@ export class BrowsingService {
 
   goToPage(url: string) {
     this.ipcRenderer.invoke('go-to-page', url).then(() => this.updateHistory());
-    // this.ipcRenderer.invoke('cookie-update');
   }
 
   setToCurrentUrl() {
@@ -76,9 +75,8 @@ export class BrowsingService {
       this.ipcRenderer = ipc;
     }
 
-    this.ipcRenderer.on('cookies', (event, data) => {
+    this.ipcRenderer.on('cookies', (_, data) => {
       this.setCookies(data.url, data.cookies);
-      console.log(this.cookies$.getValue());
     });
   }
 }
