@@ -35,7 +35,6 @@ const routes: Routes = [
     FormsModule,
     FontAwesomeModule,
     RouterModule.forRoot(routes, { useHash: true }),
-    HighchartsChartModule,
   ],
   exports: [RouterModule],
   providers: [],
