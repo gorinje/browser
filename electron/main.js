@@ -15,15 +15,15 @@ app.whenReady().then(() => {
   const cookieWindow = new BrowserWindow({
     parent: browserWindow,
     title: "COOKIEVIZ 2.0",
-    width: 640,
-    height: 360,
+    width: 720,
+    height: 720,
     webPreferences: {
       contextIsolation: false,
       nodeIntegration: true,
       webSecurity: false,
     },
     backgroundColor: "gray",
-    resizable: false,
+    resizable: true,
     show: false,
     closable: false,
   });
