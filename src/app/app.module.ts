@@ -11,6 +11,8 @@ import { RefreshComponent } from './toolbar/refresh/refresh.component';
 import { AdressComponent } from './toolbar/adress/adress.component';
 import { DebugComponent } from './toolbar/debug/debug.component';
 import { HomeComponent } from './toolbar/home/home.component';
+import { HistoryComponent } from './toolbar/history/history.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -21,12 +23,14 @@ import { HomeComponent } from './toolbar/home/home.component';
     RefreshComponent,
     AdressComponent,
     DebugComponent,
-    HomeComponent
+    HomeComponent,
+    HistoryComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

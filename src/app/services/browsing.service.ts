@@ -1,5 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import { IpcRenderer } from 'electron';
+import {Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,8 @@ import { IpcRenderer } from 'electron';
 export class BrowsingService {
   private ipcRenderer: IpcRenderer;
   public updateUrl:EventEmitter<any> = new EventEmitter();
+  history: string[] = []; // Historique de navigation
+  updateHistoryList = new Subject<void>();
 
   url = 'https://amiens.unilasalle.fr';
   canGoBack =false;
@@ -40,6 +43,7 @@ export class BrowsingService {
     .then((url)=>{
       this.url = url;
     });
+
   }
 
   updateHistory(){
@@ -50,6 +54,13 @@ export class BrowsingService {
 
     this.ipcRenderer.invoke('can-go-forward')
     .then((canGoForward) => this.canGoForward = canGoForward);
+
+    this.addToHistory(this.url);
+  }
+
+  addToHistory(url: string) {
+    this.history.unshift(url);  // Ajouter au début de l'historique
+    this.updateHistoryList.next();
   }
 
   constructor() {
