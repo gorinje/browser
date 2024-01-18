@@ -16,16 +16,20 @@ HighchartsNetworkgraph(Highcharts);
 export class CookievizComponent {
   public cookies: Observable<Map<String, String[]>> | undefined;
   data: Array<Array<String>> = [];
+  nodes: Array<any> = [];
   @ViewChild('container') container: ElementRef | undefined;
   Highcharts: typeof Highcharts = Highcharts;
   updateFlag = false;
 
+  // chart custom config
   chartOptions: Highcharts.Options = {
     title: {
       text: 'CookieVis 2.0',
     },
     chart: {
       type: 'networkgraph',
+      width: 690,
+      height: 670,
     },
     plotOptions: {
       networkgraph: {
@@ -34,52 +38,55 @@ export class CookievizComponent {
           integration: 'verlet',
           linkLength: 100,
         },
-        link: {
-          color: 'red',
-        },
       },
     },
     series: [
       {
-        marker: {
-          radius: 15,
-        },
-        dataLabels: {
-          enabled: true,
-          textPath: {
-            enabled: true,
-          },
-          linkFormat: '',
-        },
         type: 'networkgraph',
         data: this.data,
       },
     ],
   };
 
-  log() {
-    console.log('cookie refresh');
-    this.updateFlag = true;
-  }
-
   constructor(public browsingService: BrowsingService) {
     this.cookies = browsingService.getCookies();
     this.cookies?.subscribe((d) => {
+      // clear old nodes
       this.data = [];
-      console.log(d);
+      this.nodes = [];
       d.forEach((v, k) => {
+        // add child nodes
         v.forEach((e) => {
           this.data.push([e, k]);
         });
+        // add parent nodes
+        this.nodes.push({
+          id: k,
+          dataLabels: {
+            enabled: true,
+            linkFormat: '',
+            style: {
+              fontSize: '1em',
+              fontWeight: 'normal',
+            },
+            crop: true,
+          },
+          marker: {
+            radius: 7,
+            fillColor: 'red',
+          },
+        });
       });
-
+      // update network graph
       this.chartOptions.series = [
         {
-          marker: {
-            radius: 10,
-          },
           type: 'networkgraph',
+          nodes: this.nodes,
           data: this.data,
+          marker: {
+            radius: 5,
+            fillColor: 'black',
+          },
         },
       ];
       this.updateFlag = true;

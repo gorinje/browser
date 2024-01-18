@@ -23,9 +23,9 @@ app.whenReady().then(() => {
       nodeIntegration: true,
       webSecurity: false,
     },
-    resizable: true,
+    resizable: false,
     show: false,
-    closable: true,
+    closable: false,
   });
 
   if (isDev) {
