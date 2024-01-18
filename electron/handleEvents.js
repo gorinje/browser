@@ -4,14 +4,19 @@ function initEventsHandler(mainWin, browserView, cookieWin) {
   const winContent = mainWin.webContents;
   const browserContent = browserView.webContents;
   const cookieContent = cookieWin.webContents;
+  let lastHost = "";
+
   browserContent.on("did-navigate", async (event, url) => {
-    console.log("URL changed:", url);
+    let host = new URL(url).host;
+    if (lastHost !== host) {
+      lastHost = host;
+      await session.defaultSession.clearStorageData({ storages: ["cookies"] });
+    }
     let cookies = await session.defaultSession.cookies.get({});
     let parsedcookies = new Array();
     cookies.forEach((cookie) => {
       parsedcookies.push(cookie.domain);
     });
-    winContent.send("cookies", { url: url, cookies: parsedcookies });
     cookieContent.send("cookies", { url: url, cookies: parsedcookies });
   });
 

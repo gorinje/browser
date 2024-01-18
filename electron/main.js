@@ -12,6 +12,7 @@ app.whenReady().then(() => {
       webSecurity: false,
     },
   });
+
   const cookieWindow = new BrowserWindow({
     parent: browserWindow,
     title: "COOKIEVIZ 2.0",
@@ -22,10 +23,9 @@ app.whenReady().then(() => {
       nodeIntegration: true,
       webSecurity: false,
     },
-    backgroundColor: "gray",
     resizable: true,
     show: false,
-    closable: false,
+    closable: true,
   });
 
   if (isDev) {
